@@ -55,7 +55,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/edit/"+title, http.StatusFound)
 		return
 	}
-	renderTemplate(w, "view", p)
+	renderTemplate(w, "wiki/view", p)
 }
 
 func editHandler(w http.ResponseWriter, r *http.Request) {
@@ -64,7 +64,7 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		p = &Page{Title: title}
 	}
-	renderTemplate(w, "edit", p)
+	renderTemplate(w, "wiki/edit", p)
 
 	// fmt.Fprintf(w, "<h1>Editing %s</h1>"+
 	// 	"<form action=\"/save/%s\" method=\"POST\">"+
@@ -83,6 +83,6 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
-	t, _ := template.ParseFiles("wiki/" + tmpl + ".html")
+	t, _ := template.ParseFiles(tmpl + ".html")
 	t.Execute(w, p)
 }
