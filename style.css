@@ -1,0 +1,34 @@
+body {
+    background-color: #aeddad;
+    color: rgb(2, 3, 2);
+}
+
+.options {
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: row;
+}
+.submit-btn{
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+}
+.submit-btn button{
+    padding: 10px 25px;
+}
+        textarea,
+        pre {
+            width: 400px;
+            margin: 20px auto;
+            display: block;
+            font-family: monospace;
+            font-size: 16px;
+            padding: 10px;
+        }
+    
+        pre {
+            background-color: #eee;
+            min-height: 150px;
+            white-space: pre-wrap;
+        }
+        
