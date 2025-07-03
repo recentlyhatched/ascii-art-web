@@ -44,8 +44,20 @@ func loadPage(title string) (*Page, error) {
 	return &Page{Title: title, Body: body}, nil
 }
 
+func loadPageTwo() (*Page, error) {
+	filename := "result.txt"
+	body, err := os.ReadFile(filename)
+	if err != nil {
+		return nil, err
+	}
+	return &Page{Title: "homepage", Body: body}, nil
+}
+
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
+	// fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
+	p, _ := loadPageTwo()
+
+	renderTemplate(w, "index", p)
 }
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {
