@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>ASCII Art Viewer</h1>
-    <form>
+    <form action="/ascii-art" method="POST">
         <div class="options">
             <label><input type="radio" name="view" value="Standard" checked> Standard</label>
             <label><input type="radio" name="view" value="Shadow"> Shadow</label>
@@ -20,6 +20,6 @@
     
         <textarea id="input" placeholder="Type your text here..."></textarea>
     </form>
-    <pre id="output" placeholder="Output will show here"></pre>
+    <pre id="output" placeholder="Output will show here">{{printf "%s" .Body}}</pre>
 </body>
 </html>
