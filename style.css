@@ -17,7 +17,7 @@ body {
 .submit-btn button{
     padding: 10px 25px;
 }
-        textarea,
+        .input-main ,
         pre {
             width: 400px;
             margin: 20px auto;

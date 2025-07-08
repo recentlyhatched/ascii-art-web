@@ -15,10 +15,10 @@
             <label><input type="radio" name="view" value="Thinkertoy"> Thinkertoy</label>
         </div>
         <div class="submit-btn">
-            <label><button type="submit" name="view" value="inverted"> Submit!</label>
+            <button type="submit" name="view" value="inverted"> Submit! </button>
         </div>
     
-        <textarea id="input" placeholder="Type your text here..."></textarea>
+        <input class="input-main" type="text" id="input" name="text" placeholder="Type your text here..."></input>
     </form>
     <pre id="output" placeholder="Output will show here">{{printf "%s" .Body}}</pre>
 </body>
