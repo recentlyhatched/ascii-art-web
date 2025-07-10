@@ -1,100 +1,114 @@
 package main
 
-// http server tutorial https://go.dev/doc/articles/wiki/
-
 import (
+	"bufio"
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
-	"os"
+	"strings"
 )
 
+const BannerHeight = 8
+
+var bannerURLs = map[string]string{
+	"standard":   "https://learn.01founders.co/api/content/root/public/subjects/ascii-art/standard.txt",
+	"shadow":     "https://learn.01founders.co/api/content/root/public/subjects/ascii-art/shadow.txt",
+	"thinkertoy": "https://learn.01founders.co/api/content/root/public/subjects/ascii-art/thinkertoy.txt",
+}
+
 func main() {
-	p1 := &Page{Title: "TestPage", Body: []byte("This is a sample Page.")}
-	p1.save()
-	p2, _ := loadPage("TestPage")
-	fmt.Println(string(p2.Body))
+	http.HandleFunc("/", homeHandler)
+	http.HandleFunc("/ascii-art", asciiArtHandler)
 
-	http.HandleFunc("/", handler)
-	http.HandleFunc("/view/", viewHandler)
-	http.HandleFunc("/edit/", editHandler)
-	http.HandleFunc("/save/", saveHandler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	// connect css file
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
+	fmt.Println("Server running on http://localhost:8080")
+	http.ListenAndServe(":8080", nil)
 }
 
-type Page struct {
-	Title string
-	Body  []byte
-}
-
-func (p *Page) save() error {
-	filename := "wiki/" + p.Title + ".txt"
-	// 0600 - read-write permission for the current user only
-	return os.WriteFile(filename, p.Body, 0600)
-}
-
-func loadPage(title string) (*Page, error) {
-	filename := "wiki/" + title + ".txt"
-	body, err := os.ReadFile(filename)
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("templates/index.html")
 	if err != nil {
-		return nil, err
-	}
-	return &Page{Title: title, Body: body}, nil
-}
-
-func loadPageTwo() (*Page, error) {
-	filename := "result.txt"
-	body, err := os.ReadFile(filename)
-	if err != nil {
-		return nil, err
-	}
-	return &Page{Title: "homepage", Body: body}, nil
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	// fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
-	p, _ := loadPageTwo()
-
-	renderTemplate(w, "index", p)
-}
-
-func viewHandler(w http.ResponseWriter, r *http.Request) {
-	title := r.URL.Path[len("/view/"):]
-	p, err := loadPage(title)
-	if err != nil {
-		http.Redirect(w, r, "/edit/"+title, http.StatusFound)
+		http.Error(w, "Template not found", http.StatusNotFound)
 		return
 	}
-	renderTemplate(w, "wiki/view", p)
+	tmpl.Execute(w, nil)
 }
 
-func editHandler(w http.ResponseWriter, r *http.Request) {
-	title := r.URL.Path[len("/edit/"):]
-	p, err := loadPage(title)
-	if err != nil {
-		p = &Page{Title: title}
+func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		http.Error(w, "Bad request", http.StatusBadRequest)
+		return
 	}
-	renderTemplate(w, "wiki/edit", p)
-
-	// fmt.Fprintf(w, "<h1>Editing %s</h1>"+
-	// 	"<form action=\"/save/%s\" method=\"POST\">"+
-	// 	"<textarea name=\"body\">%s</textarea><br>"+
-	// 	"<input type=\"submit\" value=\"Save\">"+
-	// 	"</form>",
-	// 	p.Title, p.Title, p.Body)
+	text := r.FormValue("text")
+	style := r.FormValue("banner")
+	if text == "" || style == "" {
+		http.Error(w, "Missing text or banner style", http.StatusBadRequest)
+		return
+	}
+	bannerMap, err := loadBannerFromURL(bannerURLs[style])
+	if err != nil {
+		http.Error(w, "Internal Server Error: could not load banner", http.StatusInternalServerError)
+		return
+	}
+	ascii := generateAscii(text, bannerMap)
+	tmpl, err := template.ParseFiles("templates/index.html")
+	if err != nil {
+		http.Error(w, "Template not found", http.StatusNotFound)
+		return
+	}
+	tmpl.Execute(w, template.HTML(ascii))
 }
 
-func saveHandler(w http.ResponseWriter, r *http.Request) {
-	title := r.URL.Path[len("/save/"):]
-	body := r.FormValue("body")
-	p := &Page{Title: title, Body: []byte(body)}
-	p.save()
-	http.Redirect(w, r, "/view/"+title, http.StatusFound)
+func loadBannerFromURL(url string) (map[rune][]string, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("HTTP error %d", resp.StatusCode)
+	}
+	scanner := bufio.NewScanner(resp.Body)
+	var lines []string
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		return nil, err
+	}
+	bannerMap := make(map[rune][]string)
+	charCount := (len(lines) + 1) / (BannerHeight + 1)
+
+	for i := 0; i < charCount; i++ {
+		start := i * (BannerHeight + 1)
+		if start+BannerHeight > len(lines) {
+			break
+		}
+		bannerMap[rune(32+i)] = lines[start : start+BannerHeight]
+	}
+	return bannerMap, nil
 }
 
-func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
-	t, _ := template.ParseFiles(tmpl + ".html")
-	t.Execute(w, p)
+func generateAscii(input string, bannerMap map[rune][]string) string {
+	lines := strings.Split(input, "\n") // FIXED newline handling
+	var result strings.Builder
+
+	for _, line := range lines {
+		for i := 0; i < BannerHeight; i++ {
+			for _, ch := range line {
+				if art, ok := bannerMap[ch]; ok {
+					result.WriteString(art[i])
+					// fmt.Printf("Char: %c, Line: %s\n", ch, art[i])
+				} else {
+					// fallback: use space character
+					result.WriteString(bannerMap[' '][i])
+				}
+			}
+			result.WriteString("\n")
+		}
+	}
+	// fmt.Printf(result.String())
+	return result.String()
 }

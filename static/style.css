@@ -1,8 +1,10 @@
 body {
-    background-color: #aeddad;
+    background-color: #ddd2ad;
     color: rgb(2, 3, 2);
 
 }
+
+
 
 .options {
     font-size: 1.5rem;
@@ -17,17 +19,16 @@ body {
 .submit-btn button{
     padding: 10px 25px;
 }
-        .input-main ,
-        pre {
+        .input-main {
             width: 400px;
             margin: 20px auto;
             display: block;
             font-family: monospace;
             font-size: 16px;
-            padding: 10px;
+            padding: 0px;
         }
     
-        pre {
+        /* pre {
             background-color: #eee;
             min-height: 150px;
             white-space: pre-wrap;
@@ -40,5 +41,27 @@ body {
                     padding: 10px;
                     font-family: monospace;
                     font-size: 16px;
-        }
+        } */
+
+        pre {
+            white-space: pre;
+            font-family: monospace;
+            height: 200px;
+            width: 400px;
+            overflow: auto;
+            position: relative;
+            z-index: 2;
+            margin: 0 auto ;
+          }
+
+          .art-result {
+            margin-top: 20px;
+            text-align: left;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            line-height:1.2;
+            padding: 1rem;
+            border-radius: 5px;
+          }
         

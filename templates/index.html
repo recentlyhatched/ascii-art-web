@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <!-- Essential Character Encoding -->
+        <meta charset="utf-8">
+    
+        <!-- Responsive Design -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Page Description & SEO -->
+        <meta name="description" content="Your page description here">
+        <meta name="keywords" content="your, keywords, here">
+        
+        <!-- Search Engine Instructions -->
+        <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>ASCII Art Web</title>
+</head>
+<body>
+    <h1>ASCII Art Generator</h1>
+    <form method="POST" action="/ascii-art">
+        <label for="text">Text:</label><br>
+        <textarea name="text" rows="4" cols="50"></textarea><br><br>
+        <label>Banner Style:</label><br>
+        <input type="radio" name="banner" value="standard" checked> Standard<br>
+        <input type="radio" name="banner" value="shadow"> Shadow<br>
+        <input type="radio" name="banner" value="thinkertoy"> Thinkertoy<br><br>
+        <button type="submit">Generate</button>
+    </form>
+    <div class="art-result"><pre>{{.}}</pre></div>
+</body>
+</html>
