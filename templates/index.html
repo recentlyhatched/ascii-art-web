@@ -18,14 +18,19 @@
 </head>
 <body>
     <h1>ASCII Art Generator</h1>
-    <form method="POST" action="/ascii-art">
+    <form method="POST" action="/ascii-art"  >
         <label for="text">Text:</label><br>
         <textarea name="text" rows="4" cols="50"></textarea><br><br>
         <label>Banner Style:</label><br>
-        <input type="radio" name="banner" value="standard" checked> Standard<br>
-        <input type="radio" name="banner" value="shadow"> Shadow<br>
-        <input type="radio" name="banner" value="thinkertoy"> Thinkertoy<br><br>
-        <button type="submit">Generate</button>
+        <div class="input-main">
+            <input type="radio" name="banner" value="standard" checked> Standard<br>
+            <input type="radio" name="banner" value="shadow"> Shadow<br>
+            <input type="radio" name="banner" value="thinkertoy"> Thinkertoy<br><br>
+        </div>
+        <div class="submit-btn">
+
+            <button  type="submit">Generate</button>
+        </div>
     </form>
     <div class="art-result"><pre>{{.}}</pre></div>
 </body>
