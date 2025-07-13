@@ -9,11 +9,13 @@ Ascii Art Web implements a server and a GUI. The server runs on port :8080. The 
 Georgina and Masoud
 
 ## Usage: how to run
-Make sure you have the (latest version of Go)[https://go.dev/doc/install]
-`git clone <repo-link>`
-`cd ascii-art-web`
-`go run main.go`
-Enter text where prompted and click the button
+1. Make sure you have the [latest version of Go](https://go.dev/doc/install)
+In your terminal:
+2. `git clone <repo-link>`
+3. `cd ascii-art-web`
+4. `go run main.go`
+5. Follow link [http://localhost:8080](http://localhost:8080) displayed in terminal
+6. On the webpage, enter text where prompted and click on the button
 
 ## Implementation details
 In order to modify the the code from Ascii Art, the logic for the terminal arguments where removed. The rest of the code was written in the generateAscii function, where the the lines splitting at '\n' was moved into the function. The loadBannerfromURL function also largely stayed the same, except there was more error handling, including http status codes.
