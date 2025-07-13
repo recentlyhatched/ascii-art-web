@@ -20,12 +20,12 @@
     <h1>ASCII Art Generator</h1>
     <form method="POST" action="/ascii-art"  >
         <label for="text">Text:</label><br>
-        <textarea name="text" rows="4" cols="50"></textarea><br><br>
+        <textarea name="text" rows="4" cols="50" placeholder="Write something here..."></textarea><br><br>
         <label>Banner Style:</label><br>
         <div class="input-main">
-            <input type="radio" name="banner" value="standard" checked> Standard<br>
-            <input type="radio" name="banner" value="shadow"> Shadow<br>
-            <input type="radio" name="banner" value="thinkertoy"> Thinkertoy<br><br>
+            <input type="radio" name="banner" value="standard" id="standard" checked><label for="standard"> Standard</label><br>
+            <input type="radio" name="banner" value="shadow" id="shadow"><label for="shadow"> Shadow</label><br>
+            <input type="radio" name="banner" value="thinkertoy" id="thinkertoy"> <label for="thinkertoy"> Thinkertoy</label><br><br>
         </div>
         <div class="submit-btn">
 
