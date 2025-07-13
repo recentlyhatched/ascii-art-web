@@ -7,21 +7,15 @@
         <!-- Responsive Design -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <!-- Page Description & SEO -->
-        <meta name="description" content="Your page description here">
-        <meta name="keywords" content="your, keywords, here">
-        
-        <!-- Search Engine Instructions -->
-        <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="../static/style.css">
     <title>ASCII Art Web</title>
 </head>
 <body>
     <h1>ASCII Art Generator</h1>
     <form method="POST" action="/ascii-art"  >
-        <label for="text">Text:</label><br>
-        <textarea name="text" rows="4" cols="50" placeholder="Write something here..."></textarea><br><br>
-        <label>Banner Style:</label><br>
+        <div class="subtitle"><p>Text:</p></div><br>
+        <textarea name="text" rows="4" cols="50" placeholder="Write something here..."></textarea><br>
+        <div class="subtitle"><p>Banner Style:</p></div><br>
         <div class="input-main">
             <input type="radio" name="banner" value="standard" id="standard" checked><label for="standard"> Standard</label><br>
             <input type="radio" name="banner" value="shadow" id="shadow"><label for="shadow"> Shadow</label><br>

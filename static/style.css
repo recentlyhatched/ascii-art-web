@@ -10,7 +10,6 @@ h1 {
     color: rgb(17, 139, 246);
 }
 
-
 textarea {
     font-size: 1.5rem;
     display: flex;
@@ -25,74 +24,77 @@ textarea {
         background-color: white;
         /* padding: 3rem; */
 }
-.submit-btn{
+.submit-btn {
     text-align: center;
     padding: 10px;
     margin: 10px;
 }
-.submit-btn button{
+.submit-btn button {
     padding: 10px 25px;
 }
-        .input-main {
-            width: 400px;
-            margin: 20px auto;
-            display: flex;
-            gap: 1rem;
+.input-main {
+    width: 400px;
+    margin: 20px auto;
+    display: flex;
+    gap: 1rem;
+    font-family: monospace;
+    font-size: 16px;
+    padding: 0px;
+
+    overflow: auto;
+        position: relative;
+        z-index: 2;
+        margin: 0 auto;
+        background-color: white;
+        padding: 3rem;
+}
+    
+/* pre {
+    background-color: #eee;
+    min-height: 150px;
+    white-space: pre-wrap;
+        background-image: url(/bg.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        border: 5px solid #ccc;
+        width: 400px;
+            height: 200px;
+            padding: 10px;
             font-family: monospace;
             font-size: 16px;
-            padding: 0px;
+} */
 
-            overflow: auto;
-                position: relative;
-                z-index: 2;
-                margin: 0 auto;
-                background-color: white;
-                padding: 3rem;
-        }
-    
-        /* pre {
-            background-color: #eee;
-            min-height: 150px;
-            white-space: pre-wrap;
-                background-image: url(/bg.jpg);
-                background-repeat: no-repeat;
-                background-size: cover;
-                border: 5px solid #ccc;
-                width: 400px;
-                    height: 200px;
-                    padding: 10px;
-                    font-family: monospace;
-                    font-size: 16px;
-        } */
+pre {
+    white-space: pre;
+    font-family: monospace;
+    height: 150px;
+    width: 400px;
+    overflow: auto;
+    position: relative;
+    z-index: 2;
+    margin: 0 auto ;
+    background-color: white;
+    padding: 3rem;
+}
 
-        pre {
-            white-space: pre;
-            font-family: monospace;
-            height: 150px;
-            width: 400px;
-            overflow: auto;
-            position: relative;
-            z-index: 2;
-            margin: 0 auto ;
-            background-color: white;
-            padding: 3rem;
-          }
-
-          .art-result {
-            margin-top: 20px;
-            text-align: center;
-            font-family: monospace;
-            white-space: pre;
-            overflow-x: auto;
-            line-height:1.2;
-            /* padding: 1rem; */
-            border-radius: 5px;
-            color: blue;
-          }
+.art-result {
+    margin-top: 20px;
+    text-align: center;
+    font-family: monospace;
+    white-space: pre;
+    overflow-x: auto;
+    line-height:1.2;
+    /* padding: 1rem; */
+    border-radius: 5px;
+    color: blue;
+}
         
 /* @media (max-width: 768px) {
         textarea {
         max-width:  30rem;
         max-height: 50rem;
         } */
-    
+
+.subtitle p {
+    text-align: center;
+}
