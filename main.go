@@ -28,11 +28,17 @@ func main() {
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		notFoundTmpl, _ := template.ParseFiles("templates/404.html")
+		notFoundTmpl.Execute(w, nil)
+		return
+	}
 	tmpl, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		http.Error(w, "Template not found", http.StatusNotFound)
 		return
 	}
+	fmt.Println(r.URL.Path)
 	tmpl.Execute(w, nil)
 }
 
