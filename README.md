@@ -9,8 +9,8 @@ Ascii Art Web implements a server and a GUI. The server runs on port :8080. The 
 Georgina and Masoud
 
 ## Usage: how to run
-1. Make sure you have the [latest version of Go](https://go.dev/doc/install)
-In your terminal:
+1. Make sure you have the [latest version of Go](https://go.dev/doc/install)\
+Go to your terminal and run the following:
 2. `git clone <repo-link>`
 3. `cd ascii-art-web`
 4. `go run main.go`
